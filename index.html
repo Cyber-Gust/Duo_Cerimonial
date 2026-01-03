@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duo Cerimonial - Criando Memórias</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        olive: {
+                            DEFAULT: '#C1CCB1', /* Oliva Pastel Principal */
+                            light: '#DDE4D5',   /* Off-white esverdeado */
+                            dark: '#A6B592',    /* Oliva Seco/Sálvia */
+                            bg: '#F5F7F2'       /* Fundo Creme/Verde muito suave */
+                        },
+                        black: '#1a1a1a',
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                        /* ATUALIZADO: Waterfall */
+                        script: ['"Waterfall"', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Waterfall&family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hover-zoom img {
+            transition: transform 0.5s ease;
+        }
+        .hover-zoom:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Ajuste para Waterfall */
+        .font-script {
+            font-weight: 400; 
+            /* A Waterfall tem muitos detalhes, fica linda em tamanhos grandes */
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 font-sans antialiased overflow-x-hidden">
+
+    <header class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-sm transition-all duration-300 shadow-sm" id="navbar">
+        <div class="container mx-auto px-6 h-24 flex justify-between items-center">
+            
+            <div class="flex-shrink-0">
+                <a href="#">
+                    <img src="imgs/longa.png" alt="Duo Cerimonial" class="h-16 w-auto object-contain"> 
+                </a>
+            </div>
+
+            <div class="hidden md:flex items-center">
+                
+                <nav class="flex space-x-8 text-xs tracking-[0.2em] font-medium text-gray-600 uppercase">
+                    <a href="#about" class="hover:text-olive transition-colors relative group">
+                        Sobre
+                        <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-olive transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#services" class="hover:text-olive transition-colors relative group">
+                        Serviços
+                        <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-olive transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#portfolio" class="hover:text-olive transition-colors relative group">
+                        Casamentos Reais
+                        <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-olive transition-all group-hover:w-full"></span>
+                    </a>
+                </nav>
+
+                <div class="h-6 w-px bg-gray-300 mx-8"></div>
+
+                <div class="flex items-center space-x-6 text-xs tracking-[0.2em] font-medium text-gray-600 uppercase">
+                    <a href="#blog" class="hover:text-olive transition-colors">Blog</a>
+                    <a href="#contact" class="hover:text-olive transition-colors">Contato</a>
+                    
+                    <div class="flex items-center space-x-4 ml-2">
+                        <a href="#" class="text-lg hover:text-olive transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-lg hover:text-olive transition-colors"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <button class="md:hidden text-2xl text-gray-800 focus:outline-none" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white absolute w-full border-t border-gray-100 shadow-lg">
+            <div class="flex flex-col items-center py-8 space-y-6 text-sm tracking-widest uppercase font-medium text-gray-600">
+                <a href="#about" class="hover:text-olive">Sobre</a>
+                <a href="#services" class="hover:text-olive">Serviços</a>
+                <a href="#portfolio" class="hover:text-olive">Casamentos Reais</a>
+                <div class="w-10 h-px bg-gray-200 my-2"></div> <a href="#blog" class="hover:text-olive">Blog</a>
+                <a href="#contact" class="hover:text-olive">Contato</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative h-screen overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="imgs/hero.jpg" 
+                 alt="Casamento Mobile" 
+                 class="w-full h-full object-cover object-center block md:hidden">
+
+            <img src="imgs/hero_desk.jpg" 
+                 alt="Casamento Desktop" 
+                 class="w-full h-full object-cover object-center hidden md:block">
+
+            <div class="absolute inset-0 bg-black/10"></div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-olive-bg" id="about">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in-up">
+                <h3 class="text-sm tracking-[0.3em] uppercase text-gray-500 mb-2">Eventos Curados, Estilo Atemporal</h3>
+                <h2 class="font-script text-6xl md:text-7xl text-black mb-4">Execução Impecável</h2>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center gap-12 max-w-6xl mx-auto">
+                
+                <div class="md:w-5/12 order-2 md:order-1 fade-in-up">
+                    <div class="bg-white p-8 md:p-12 shadow-sm border-l-4 border-olive">
+                        <p class="font-serif text-lg leading-relaxed text-gray-600 mb-6">
+                            A <span class="font-semibold text-black">Duo Cerimonial</span> é uma empresa de assessoria completa, executando eventos com maestria. Nossa paixão por casamentos, espírito criativo e atenção aos detalhes nos diferenciam.
+                        </p>
+                        <p class="font-sans text-sm font-light leading-relaxed text-gray-500 mb-8">
+                            Trazemos uma nova perspectiva para o design de eventos e colaboramos com você para criar uma celebração extraordinariamente elegante e autêntica. Valorizamos a diversidade, inclusão e a inovação.
+                        </p>
+                        <a href="#services" class="inline-block bg-olive hover:bg-olive-dark text-white text-xs tracking-[0.2em] uppercase px-8 py-4 transition-all duration-300">
+                            Nossos Serviços
+                        </a>
+                    </div>
+                </div>
+
+                <div class="md:w-7/12 order-1 md:order-2 fade-in-up relative">
+                    <div class="relative overflow-hidden group hover-zoom">
+                         <img src="imgs/11879.jpg" 
+                             alt="Noivos Felizes" 
+                             class="w-full h-[600px] object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-white" id="services">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 fade-in-up">
+                <h2 class="font-sans text-xl md:text-2xl uppercase tracking-[0.2em] font-light text-gray-800">
+                    São João del-Rei, Tiradentes, Lavras e Região<br>
+                    <span class="font-script text-5xl normal-case text-olive block mt-4">Destination Weddings</span>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                
+                <div class="group cursor-pointer fade-in-up">
+                    <div class="relative overflow-hidden h-96 mb-4">
+                        <img src="imgs/cerimonia.jpg" class="w-full h-full object-cover transition transform duration-500 group-hover:scale-105" alt="Decoração">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all"></div>
+                    </div>
+                    <div class="text-center">
+                        <h4 class="font-serif text-2xl italic text-gray-800">Assessoria Completa</h4>
+                        <p class="text-xs uppercase tracking-widest mt-2 text-olive">Do início ao fim</p>
+                    </div>
+                </div>
+
+                <div class="group cursor-pointer fade-in-up" style="transition-delay: 100ms;">
+                    <div class="relative overflow-hidden h-96 mb-4">
+                        <img src="imgs/decoracao.jpg" class="w-full h-full object-cover transition transform duration-500 group-hover:scale-105" alt="Mesa Posta">
+                    </div>
+                    <div class="text-center">
+                        <h4 class="font-serif text-2xl italic text-gray-800">Decoração & Design</h4>
+                        <p class="text-xs uppercase tracking-widest mt-2 text-olive">Conceito Único</p>
+                    </div>
+                </div>
+
+                <div class="group cursor-pointer fade-in-up" style="transition-delay: 200ms;">
+                    <div class="relative overflow-hidden h-96 mb-4">
+                        <img src="imgs/casasmentos.jpg" class="w-full h-full object-cover transition transform duration-500 group-hover:scale-105" alt="Detalhes">
+                    </div>
+                    <div class="text-center">
+                        <h4 class="font-serif text-2xl italic text-gray-800">Cerimonial do Dia</h4>
+                        <p class="text-xs uppercase tracking-widest mt-2 text-olive">Tranquilidade Absoluta</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="h-[400px] bg-fixed bg-center bg-cover relative" style="background-image: url('imgs/bg.jpg');">
+        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+            <h2 class="font-script text-7xl text-white drop-shadow-lg text-center px-4">
+                Criando Memórias
+            </h2>
+        </div>
+    </section>
+
+    <section class="py-24 bg-olive-bg">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-gray-500 font-sans uppercase tracking-[0.2em] text-sm">Veja nossos</span>
+                <h2 class="font-script text-6xl text-black mt-2">Últimos Eventos</h2>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto items-center">
+                <div class="md:w-1/3 text-right space-y-8 pr-8 border-r border-gray-200">
+                    <div class="group cursor-pointer">
+                        <h3 class="font-serif text-xl text-gray-800 group-hover:text-olive transition-colors">Pantone 2026: Inspirações</h3>
+                        <p class="text-xs text-gray-500 mt-1">Tendências de Cor</p>
+                    </div>
+                    <div class="group cursor-pointer">
+                        <h3 class="font-serif text-xl text-gray-800 group-hover:text-olive transition-colors">Mariana + Pedro</h3>
+                        <p class="text-xs text-gray-500 mt-1">Casamento no Campo</p>
+                    </div>
+                    <div class="group cursor-pointer">
+                        <h3 class="font-serif text-xl text-gray-800 group-hover:text-olive transition-colors">Guia de Presentes 2025</h3>
+                        <p class="text-xs text-gray-500 mt-1">Dicas para Convidados</p>
+                    </div>
+                </div>
+
+                <div class="md:w-2/3">
+                    <div class="bg-white p-4 shadow-lg rotate-1 hover:rotate-0 transition-transform duration-500">
+                        <img src="imgs/destaque.jpg" alt="Destaque" class="w-full h-auto">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="relative py-24" id="contact">
+        <div class="absolute inset-0 z-0">
+             <img src="imgs/contact.png" class="w-full h-full object-cover">
+             <div class="absolute inset-0 bg-gray-900/40"></div>
+        </div>
+        <div class="relative z-10 flex flex-col items-center justify-center text-center h-full text-white px-4">
+            <h2 class="font-serif text-4xl md:text-5xl mb-8">Vamos planejar o seu sonho?</h2>
+            <a href="mailto:contato@duocerimonial.com.br" class="bg-white/90 hover:bg-white text-olive font-semibold tracking-[0.3em] uppercase py-4 px-10 text-sm transition-all shadow-lg hover:scale-105">
+                Entre em Contato
+            </a>
+        </div>
+    </section>
+
+    <footer class="bg-black text-white py-16 border-t border-olive/30">
+        <div class="container mx-auto px-6 text-center">
+            
+            <div class="mb-8 flex justify-center">
+                <img src="imgs/curta.png" alt="Duo Cerimonial" class="h-48 w-auto opacity-80 grayscale invert">
+            </div>
+
+            <div class="flex justify-center space-x-6 mb-10">
+                <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-olive transition-colors">
+                    <i class="fab fa-pinterest-p"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-olive transition-colors">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-olive transition-colors">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-olive transition-colors">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-6 text-xs uppercase tracking-widest text-gray-400 mb-12">
+                <a href="#" class="hover:text-white">Home</a>
+                <a href="#" class="hover:text-white">Sobre</a>
+                <a href="#" class="hover:text-white">Serviços</a>
+                <a href="#" class="hover:text-white">Portfólio</a>
+                <a href="#" class="hover:text-white">Contato</a>
+            </div>
+
+            <div class="text-gray-600 text-xs font-light">
+                <p>&copy; 2026 Duo Cerimonial. Todos os direitos reservados.</p>
+                <p class="mt-2">Design inspirado. Criando memórias únicas.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu Mobile Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-md', 'py-1');
+                navbar.classList.remove('py-2');
+            } else {
+                navbar.classList.remove('shadow-md', 'py-1');
+                navbar.classList.add('py-2');
+            }
+        });
+
+        // Intersection Observer para animações de scroll (Fade in Up)
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
