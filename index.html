@@ -45,7 +45,6 @@
                     fontFamily: {
                         serif: ['"Cormorant Garamond"', 'serif'],
                         sans: ['"Montserrat"', 'sans-serif'],
-                        /* ATUALIZADO: Waterfall */
                         script: ['"Waterfall"', 'cursive'],
                     }
                 }
@@ -60,6 +59,39 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
+        /* Estilos do Loader */
+        #page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease-out, visibility 0.8s;
+        }
+
+        .loader-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Animação suave para a logo no loader */
+        .loader-pulse {
+            animation: pulse-custom 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse-custom {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .7; transform: scale(0.95); }
+        }
+
+        /* Resto dos estilos */
         .fade-in-up {
             opacity: 0;
             transform: translateY(20px);
@@ -76,27 +108,29 @@
             transform: scale(1.05);
         }
         
-        /* Ajuste para Waterfall */
         .font-script {
             font-weight: 400; 
-            /* A Waterfall tem muitos detalhes, fica linda em tamanhos grandes */
         }
     </style>
 </head>
-<body class="bg-white text-gray-800 font-sans antialiased overflow-x-hidden">
+<body class="bg-white text-gray-800 font-sans antialiased overflow-x-hidden overflow-y-hidden"> 
+    <div id="page-loader">
+        <div class="text-center">
+            <img src="imgs/ISOTIPO.png" alt="Carregando" class="w-24 h-auto mx-auto mb-4 loader-pulse object-contain">
 
-    <header class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-sm transition-all duration-300 shadow-sm" id="navbar">
+        </div>
+    </div>
+    <header class="fixed w-full top-0 z-50 transition-all duration-500 bg-white/0 backdrop-blur-[2px]" id="navbar">
         <div class="container mx-auto px-6 h-24 flex justify-between items-center">
             
             <div class="flex-shrink-0">
                 <a href="#" aria-label="Duo Cerimonial Home">
-                    <img src="imgs/longa.png" alt="Duo Cerimonial Logo" class="h-16 w-auto object-contain"> 
+                    <img id="logo-img" src="imgs/longa.png" alt="Duo Cerimonial Logo" class="h-10 md:h-16 w-auto object-contain transition-all duration-300 brightness-0 invert"> 
                 </a>
             </div>
 
             <div class="hidden md:flex items-center">
-                
-                <nav class="flex space-x-8 text-xs tracking-[0.2em] font-medium text-gray-600 uppercase">
+                <nav class="nav-text flex space-x-8 text-xs tracking-[0.2em] font-medium text-white uppercase transition-colors duration-300">
                     <a href="#about" class="hover:text-olive transition-colors relative group">
                         Sobre
                         <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-olive transition-all group-hover:w-full"></span>
@@ -106,25 +140,25 @@
                         <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-olive transition-all group-hover:w-full"></span>
                     </a>
                     <a href="#portfolio" class="hover:text-olive transition-colors relative group">
-                        Casamentos Reais
+                        Casamentos
                         <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-olive transition-all group-hover:w-full"></span>
                     </a>
                 </nav>
 
                 <div class="h-6 w-px bg-gray-300 mx-8"></div>
 
-                <div class="flex items-center space-x-6 text-xs tracking-[0.2em] font-medium text-gray-600 uppercase">
+                <div class="nav-text flex items-center space-x-6 text-xs tracking-[0.2em] font-medium text-white uppercase transition-colors duration-300">
                     <a href="#blog" class="hover:text-olive transition-colors">Blog</a>
                     <a href="#contact" class="hover:text-olive transition-colors">Contato</a>
                     
                     <div class="flex items-center space-x-4 ml-2">
-                        <a href="https://Instagram.com/duo_cerimonial" target="_blank" class="text-lg hover:text-olive transition-colors" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="https://wa.me/5532999786332" target="_blank" class="text-lg hover:text-olive transition-colors" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://Instagram.com/duo_cerimonial" target="_blank" class="text-lg hover:text-olive transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/5532999786332" target="_blank" class="text-lg hover:text-olive transition-colors"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
             </div>
 
-            <button class="md:hidden text-2xl text-gray-800 focus:outline-none" onclick="toggleMenu()" aria-label="Abrir Menu">
+            <button class="nav-text md:hidden text-2xl text-white focus:outline-none transition-colors duration-300" onclick="toggleMenu()" aria-label="Abrir Menu">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
@@ -133,56 +167,92 @@
             <div class="flex flex-col items-center py-8 space-y-6 text-sm tracking-widest uppercase font-medium text-gray-600">
                 <a href="#about" class="hover:text-olive">Sobre</a>
                 <a href="#services" class="hover:text-olive">Serviços</a>
-                <a href="#portfolio" class="hover:text-olive">Casamentos Reais</a>
-                <div class="w-10 h-px bg-gray-200 my-2"></div> <a href="#blog" class="hover:text-olive">Blog</a>
+                <a href="#portfolio" class="hover:text-olive">Casamentos</a>
+                <div class="w-10 h-px bg-gray-200 my-2"></div> 
+                <a href="#blog" class="hover:text-olive">Blog</a>
                 <a href="#contact" class="hover:text-olive">Contato</a>
             </div>
         </div>
     </header>
 
-    <section class="relative h-screen overflow-hidden">
-        <div class="absolute inset-0">
-            <img src="imgs/hero.jpg" 
-                 alt="Casamento Duo Cerimonial Mobile" 
-                 class="w-full h-full object-cover object-center block md:hidden">
-
-            <img src="imgs/hero_desk.jpg" 
-                 alt="Casamento Duo Cerimonial Desktop" 
-                 class="w-full h-full object-cover object-center hidden md:block">
-
-            <div class="absolute inset-0 bg-black/10"></div>
+    <section class="relative h-[70vh] md:h-screen overflow-hidden">
+        
+        <div class="absolute inset-0 pointer-events-none">
+            <iframe 
+                class="absolute top-1/2 left-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2"
+                src="https://www.youtube.com/embed/nMQZJuiY9IA?autoplay=1&mute=1&loop=1&playlist=nMQZJuiY9IA&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1"                 title="Background Video"
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
         </div>
+
+        <div class="absolute inset-0 bg-black/10"></div>
+
+        <div class="relative z-10 h-full flex items-center justify-center">
+            </div>
+
     </section>
 
     <section class="py-24 bg-olive-bg" id="about">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16 fade-in-up">
-                <h3 class="text-sm tracking-[0.3em] uppercase text-gray-500 mb-2">Eventos Curados, Estilo Atemporal</h3>
-                <h2 class="font-script text-6xl md:text-7xl text-black mb-4">Execução Impecável</h2>
+                <h3 class="text-xl tracking-[0.3em] uppercase text-gray-500 mb-2">O lar de casamentos </h3>
+                <h2 class="font-script text-6xl md:text-7xl text-black mb-4">Excepcionais</h2>
             </div>
 
             <div class="flex flex-col md:flex-row items-center gap-12 max-w-6xl mx-auto">
                 
                 <div class="md:w-5/12 order-2 md:order-1 fade-in-up">
                     <div class="bg-white p-8 md:p-12 shadow-sm border-l-4 border-olive">
-                        <p class="font-serif text-lg leading-relaxed text-gray-600 mb-6">
-                            A <span class="font-semibold text-black">Duo Cerimonial</span> é uma empresa de assessoria completa, executando eventos com maestria. Nossa paixão por casamentos, espírito criativo e atenção aos detalhes nos diferenciam.
+                        
+                        <img src="imgs/ISOTIPO.png" alt="Duo Cerimonial Logo" class="h-[60px] mx-auto block w-auto mb-6 object-contain">
+
+                        <p class="font-serif text-lg text-justify leading-relaxed text-gray-600 mb-6">
+                            Na <span class="font-semibold text-black">Duo Cerimonial</span>, nosso trabalho é estar atentas ao que está acontecendo e ao que ainda pode acontecer.
+                            Organizamos tudo com cuidado para que você não precise sustentar imprevistos no momento em que deveria apenas viver.
                         </p>
-                        <p class="font-sans text-sm font-light leading-relaxed text-gray-500 mb-8">
-                            Trazemos uma nova perspectiva para o design de eventos e colaboramos com você para criar uma celebração extraordinariamente elegante e autêntica. Valorizamos a diversidade, inclusão e a inovação.
+                        
+                        <p class="font-sans text-sm font-light text-justify leading-relaxed text-gray-500 mb-8">
+                            Você não precisa estar no controle.
+                            Precisa estar presente.
+                            Nós estamos ali para garantir isso.
                         </p>
-                        <a href="#services" class="inline-block bg-olive hover:bg-olive-dark text-white text-xs tracking-[0.2em] uppercase px-8 py-4 transition-all duration-300">
+                        
+                        <a href="#services" class="block w-fit mx-auto bg-olive hover:bg-olive-dark text-white text-xs tracking-[0.2em] uppercase px-8 py-4 transition-all duration-300">
                             Nossos Serviços
                         </a>
                     </div>
                 </div>
 
-                <div class="md:w-7/12 order-1 md:order-2 fade-in-up relative">
-                    <div class="relative overflow-hidden group hover-zoom">
-                         <img src="imgs/11879.jpg" 
-                             alt="Noivos Felizes na Cerimônia" 
-                             class="w-full h-[600px] object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                <div class="w-full md:w-7/12 order-1 md:order-2 fade-in-up relative md:mr-12" id="carousel-wrapper">
+    
+                    <div class="relative overflow-hidden h-[400px] md:h-[600px] w-full">
+                        
+                        <img src="imgs/foto3.jpg" alt="Foto 1" class="carousel-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-100">
+                        
+                        <img src="imgs/foto2.jpg" alt="Foto 2" class="carousel-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-0">
+                        
+                        <img src="imgs/foto1.jpg" alt="Foto 3" class="carousel-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-0">
+                        
+                        <img src="imgs/foto4.jpg" alt="Foto 4" class="carousel-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-0">
+                        
+                        <img src="imgs/foto5.jpg" alt="Foto 5" class="carousel-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-0">
+
+                        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3 z-10">
+                            <button onclick="goToSlide(0)" class="carousel-dot w-2 h-2 rounded-full bg-white transition-all duration-300"></button>
+                            <button onclick="goToSlide(1)" class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300"></button>
+                            <button onclick="goToSlide(2)" class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300"></button>
+                            <button onclick="goToSlide(3)" class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300"></button>
+                            <button onclick="goToSlide(4)" class="carousel-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300"></button>
+                        </div>
                     </div>
+
+                    <button onclick="nextSlide()" class="absolute top-1/2 -right-8 md:-right-12 transform -translate-y-1/2 text-gray-400 hover:text-olive transition-colors duration-300 focus:outline-none hidden md:block" aria-label="Próxima foto">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>
@@ -193,7 +263,7 @@
             <div class="text-center mb-12 fade-in-up">
                 <h2 class="font-sans text-xl md:text-2xl uppercase tracking-[0.2em] font-light text-gray-800">
                     São João del-Rei, Tiradentes, Lavras e Região<br>
-                    <span class="font-script text-5xl normal-case text-olive block mt-4">Destination Weddings</span>
+                    <span class="font-script text-5xl normal-case text-olive block mt-4">Casamentos Conduzidos</span>
                 </h2>
             </div>
 
@@ -206,7 +276,7 @@
                     </div>
                     <div class="text-center">
                         <h4 class="font-serif text-2xl italic text-gray-800">Assessoria Completa</h4>
-                        <p class="text-xs uppercase tracking-widest mt-2 text-olive">Do início ao fim</p>
+                        <p class="text-xs uppercase tracking-widest mt-2 text-olive">Cuidado em cada etapa</p>
                     </div>
                 </div>
 
@@ -215,8 +285,8 @@
                         <img src="imgs/decoracao.jpg" class="w-full h-full object-cover transition transform duration-500 group-hover:scale-105" alt="Decoração e Design de Eventos">
                     </div>
                     <div class="text-center">
-                        <h4 class="font-serif text-2xl italic text-gray-800">Decoração & Design</h4>
-                        <p class="text-xs uppercase tracking-widest mt-2 text-olive">Conceito Único</p>
+                        <h4 class="font-serif text-2xl italic text-gray-800">Consultoria</h4>
+                        <p class="text-xs uppercase tracking-widest mt-2 text-olive">um norte seguro</p>
                     </div>
                 </div>
 
@@ -225,7 +295,7 @@
                         <img src="imgs/casasmentos.jpg" class="w-full h-full object-cover transition transform duration-500 group-hover:scale-105" alt="Cerimonial do Dia e Coordenação">
                     </div>
                     <div class="text-center">
-                        <h4 class="font-serif text-2xl italic text-gray-800">Cerimonial do Dia</h4>
+                        <h4 class="font-serif text-2xl italic text-gray-800">Condução do Dia</h4>
                         <p class="text-xs uppercase tracking-widest mt-2 text-olive">Tranquilidade Absoluta</p>
                     </div>
                 </div>
@@ -246,7 +316,7 @@
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
                 <span class="text-gray-500 font-sans uppercase tracking-[0.2em] text-sm">Veja nossos</span>
-                <h2 class="font-script text-6xl text-black mt-2">Últimos Eventos</h2>
+                <h2 class="font-script text-6xl text-black mt-2">Eventos Marcantes</h2>
             </div>
 
             <div class="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto items-center">
@@ -256,7 +326,7 @@
                         <p class="text-xs text-gray-500 mt-1">Tendências de Cor</p>
                     </div>
                     <div class="group cursor-pointer">
-                        <h3 class="font-serif text-xl text-gray-800 group-hover:text-olive transition-colors">Mariana + Pedro</h3>
+                        <h3 class="font-serif text-xl text-gray-800 group-hover:text-olive transition-colors">Duda & Augusto</h3>
                         <p class="text-xs text-gray-500 mt-1">Casamento no Campo</p>
                     </div>
                     <div class="group cursor-pointer">
@@ -280,14 +350,14 @@
              <div class="absolute inset-0 bg-gray-900/40"></div>
         </div>
         <div class="relative z-10 flex flex-col items-center justify-center text-center h-full text-white px-4">
-            <h2 class="font-serif text-4xl md:text-5xl mb-8">Vamos planejar o seu sonho?</h2>
-            <a href="mailto:contato@duocerimonial.com.br" class="bg-white/90 hover:bg-white text-olive font-semibold tracking-[0.3em] uppercase py-4 px-10 text-sm transition-all shadow-lg hover:scale-105">
-                Entre em Contato
+            <h2 class="font-serif text-4xl md:text-5xl mb-8">Vamos cuidar disso juntos?</h2>
+            <a href="mailto:contato@duocerimonial.com.br" class="bg-white/90 hover:bg-white text-black font-semibold tracking-[0.3em] uppercase py-4 px-10 text-sm transition-all shadow-lg hover:scale-105">
+                Fale com a DUO!
             </a>
         </div>
     </section>
 
-    <footer class="bg-black text-white py-16 border-t border-olive/30">
+    <footer class="bg-black text-white py-16">
         <div class="container mx-auto px-6 text-center">
             
             <div class="mb-8 flex justify-center">
@@ -325,6 +395,19 @@
     </footer>
 
     <script>
+        // --- SCRIPT DO LOADING ---
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('page-loader');
+            const body = document.body;
+            
+            // Adiciona classe para esconder o loader
+            loader.classList.add('loader-hidden');
+            
+            // Remove a trava de scroll do body
+            body.classList.remove('overflow-y-hidden');
+        });
+        // --- FIM SCRIPT DO LOADING ---
+
         // Menu Mobile Toggle
         function toggleMenu() {
             const menu = document.getElementById('mobile-menu');
@@ -362,6 +445,128 @@
         document.querySelectorAll('.fade-in-up').forEach(el => {
             observer.observe(el);
         });
+        
+        const navbar = document.getElementById('navbar');
+        const logoImg = document.getElementById('logo-img');
+        // Pega todos os elementos que devem mudar de cor (menu e botão mobile)
+        const navTexts = document.querySelectorAll('.nav-text');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                // ROLANDO PARA BAIXO (Fundo Branco, Texto Escuro, Logo Original)
+                navbar.classList.remove('bg-white/0', 'backdrop-blur-[2px]');
+                navbar.classList.add('bg-white', 'shadow-md');
+
+                // Remove o filtro da logo (volta a ser a cor original/preta)
+                logoImg.classList.remove('brightness-0', 'invert');
+
+                // Muda texto para cinza escuro
+                navTexts.forEach(el => {
+                    el.classList.remove('text-white');
+                    el.classList.add('text-gray-600');
+                    // Se o botão mobile usava gray-800, ajustamos aqui se necessário, 
+                    // mas gray-600 costuma ficar bom pra tudo.
+                });
+
+            } else {
+                // NO TOPO (Transparente, Texto Branco, Logo Branca)
+                navbar.classList.add('bg-white/0', 'backdrop-blur-[2px]');
+                navbar.classList.remove('bg-white', 'shadow-md');
+
+                // Aplica filtro para deixar a logo branca
+                logoImg.classList.add('brightness-0', 'invert');
+
+                // Muda texto para branco
+                navTexts.forEach(el => {
+                    el.classList.add('text-white');
+                    el.classList.remove('text-gray-600');
+                });
+            }
+        });
+
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            
+            // Lógica para garantir legibilidade quando abre o menu
+            if (!menu.classList.contains('hidden')) {
+                // Se abriu o menu, força o header branco para dar contraste
+                navbar.classList.add('bg-white');
+                navbar.classList.remove('bg-white/0');
+                logoImg.classList.remove('brightness-0', 'invert');
+                navTexts.forEach(el => {
+                    el.classList.remove('text-white');
+                    el.classList.add('text-gray-600');
+                });
+            } else if (window.scrollY <= 50) {
+                // Se fechou e está no topo, volta a ser transparente/branco
+                navbar.classList.remove('bg-white');
+                navbar.classList.add('bg-white/0');
+                logoImg.classList.add('brightness-0', 'invert');
+                navTexts.forEach(el => {
+                    el.classList.add('text-white');
+                    el.classList.remove('text-gray-600');
+                });
+            }
+        }
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const totalSlides = slides.length;
+        let slideInterval;
+
+        // Função para mudar o slide
+        function updateCarousel() {
+            // Atualiza as imagens (fade in/out)
+            slides.forEach((slide, index) => {
+                if (index === currentSlide) {
+                    slide.classList.remove('opacity-0');
+                    slide.classList.add('opacity-100');
+                } else {
+                    slide.classList.remove('opacity-100');
+                    slide.classList.add('opacity-0');
+                }
+            });
+
+            // Atualiza as bolinhas (branca sólida para ativa, transparente para inativa)
+            dots.forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.classList.remove('bg-white/50');
+                    dot.classList.add('bg-white');
+                } else {
+                    dot.classList.remove('bg-white');
+                    dot.classList.add('bg-white/50');
+                }
+            });
+        }
+
+        // Ir para o próximo slide
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides; // Volta ao 0 se chegar no fim
+            updateCarousel();
+            resetTimer(); // Reinicia o tempo para não pular rápido demais após clique manual
+        }
+
+        // Ir para um slide específico (clique nas bolinhas)
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+            resetTimer();
+        }
+
+        // Timer automático (Muda a cada 4 segundos)
+        function startTimer() {
+            slideInterval = setInterval(nextSlide, 4000);
+        }
+
+        function resetTimer() {
+            clearInterval(slideInterval);
+            startTimer();
+        }
+
+        // Inicia tudo
+        startTimer();
     </script>
 </body>
 </html>
